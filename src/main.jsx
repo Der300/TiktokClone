@@ -7,7 +7,7 @@ import GlobalStyles from './components/GlobalStyles/index.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <GlobalStyles>
-    <App />
+      <App />
     </GlobalStyles>
   </StrictMode>,
 )
