@@ -1,4 +1,10 @@
 .wrapper {
+    --search-border-radius: 92px;
+    --search-height: 46px;
+    --search-height-after: 28px;
+    --search-width-button: 52px;
+
+
     width: 100%;
     height: var(--height-layout-header);
     box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
@@ -9,5 +15,88 @@
 .inner {
     height: 100%;
     width: var(--width-layout-content);
-    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+//
+.search,
+.search-result {
+    width: 360px;
+}
+
+.search {
+    position: relative;
+    height: var(--search-height);
+    background-color: rgba(var(--color-grey), 0.06);
+    border-radius: var(--search-border-radius);
+    border: 1.5px solid transparent;
+    padding-left: 16px;
+    display: flex;
+
+    input {
+        flex: 1;
+        color: var(--color-black);
+        font-size: 1.6rem;
+        height: 100%;
+        background-color: transparent;
+        caret-color: var(--color-primary);
+    }
+
+    input:not(:placeholder-shown)~.btn-search {
+        color: rgba(var(--color-grey), 0.75);
+    }
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 1px;
+        height: var(--search-height-after);
+        right: var(--search-width-button);
+        top: calc((var(--search-height) - var(--search-height-after))/2);
+        background-color: rgba(var(--color-grey), 0.12);
+    }
+
+    &:focus-within {
+        border-color: rgba(var(--color-grey), 0.2);
+    }
+}
+
+
+.search-title {
+    color: rgba(var(--color-grey), 0.5);
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 5px 12px;
+}
+
+.clear,
+.loading {
+    position: absolute;
+    right: calc(var(--search-width-button) + 16px);
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(var(--color-grey), 0.34);
+    cursor: pointer;
+}
+
+
+.btn-search {
+    width: var(--search-width-button);
+    height: 100%;
+    font-size: 2rem;
+    border-top-right-radius: var(--search-border-radius);
+    border-bottom-right-radius: var(--search-border-radius);
+    color: rgba(var(--color-grey), 0.34);
+
+    &:hover {
+        background-color: rgba(var(--color-grey), 0.03);
+        cursor: pointer;
+    }
+
+    &:active {
+        background-color: rgba(var(--color-grey), 0.06);
+    }
+}
+

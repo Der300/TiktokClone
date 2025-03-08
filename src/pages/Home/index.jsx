@@ -1,7 +1,7 @@
 const Home = () => {
     return ( 
         <>
-        <h2>Home page</h2>
+        <h2 style={{position: 'relative', height: '100px', backgroundColor:'grey'}}>Home page</h2>
         </>
      );
 }

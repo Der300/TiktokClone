@@ -3,6 +3,12 @@
 
 :root {
     --color-primary: #fe2c55;
+    --color-primary-hover: #fcf1f3;
+    --color-black: #000;
+    --color-white: #fff;
+    --color-text: #333;
+    --color-check-icon: 32, 213, 236;
+    --color-grey: 22, 24, 35;
 
     //layout
     --width-layout-content: 1150px;
@@ -26,3 +32,12 @@ body {
     text-rendering: optimizeSpeed;
 }
 
+button, input, [tabindex] {
+    outline: none;
+    border: none;
+}
+
+a[href] {
+    text-decoration: none;
+    color: var(--color-text);
+}
