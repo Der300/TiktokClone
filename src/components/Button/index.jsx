@@ -1,5 +1,7 @@
 import classNames from "classnames/bind";
-import styles from './Button.module.scss'
+import { Link } from 'react-router-dom';
+
+import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -35,9 +37,10 @@ const Button = ({
             }
         })
     }
+    
 
     if (to) {
-        localProps.to == to;
+        localProps.to = to;
         Comp = Link;
     } else if (href) {
         localProps.href = href;
