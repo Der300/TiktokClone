@@ -18,6 +18,10 @@
     &:hover {
         background-color: rgba($color: var(--color-grey), $alpha: 0.03);
     }
+
+    &.separate {
+        border-top: 1px solid rgba($color: var(--color-grey), $alpha: 0.12);
+    }
 }
 
 // header

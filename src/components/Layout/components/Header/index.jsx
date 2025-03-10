@@ -1,7 +1,8 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faEarthAsia, faEllipsisVertical, faKeyboard, faMagnifyingGlass, faQuestionCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import Tippy from '@tippyjs/react/headless';
+import { faCircleXmark, faCloudUpload, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faMagnifyingGlass, faMessage, faQuestionCircle, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
+import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useEffect, useState } from 'react';
 
@@ -17,7 +18,7 @@ const cx = classNames.bind(styles);
 
 const MENU_ITEMS = [
     {
-        icon: <FontAwesomeIcon icon={faEarthAsia}/>,
+        icon: <FontAwesomeIcon icon={faEarthAsia} />,
         title: 'English',
         children: {
             title: 'Language',
@@ -25,23 +26,23 @@ const MENU_ITEMS = [
                 {
                     type: 'language',
                     code: 'EN',
-                    title:'English'
+                    title: 'English'
                 },
                 {
                     type: 'language',
                     code: 'vi',
-                    title:'tiếng Việt'
+                    title: 'tiếng Việt'
                 }
             ]
         }
     },
     {
-        icon: <FontAwesomeIcon icon={faQuestionCircle}/>,
+        icon: <FontAwesomeIcon icon={faQuestionCircle} />,
         title: 'Feedback and help',
         to: '/feedback'
     },
     {
-        icon: <FontAwesomeIcon icon={faKeyboard}/>,
+        icon: <FontAwesomeIcon icon={faKeyboard} />,
         title: 'Keyboard shortcuts',
     }
 ]
@@ -50,6 +51,8 @@ const Header = () => {
     // state control tippy search
     const [searchResult, setSearchResult] = useState([]);
 
+    const currentUser = true;
+
     // handle tippy search
     useEffect(() => {
         setTimeout(() => {
@@ -57,28 +60,56 @@ const Header = () => {
         }, 0);
     }, []);
 
+
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
             case 'language':
                 // handle change language
                 console.log('language');
-                
+
                 break;
-        
+
             default:
                 console.log('different');
-                
+
                 break;
         }
-        
+
+
     }
+
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'View profile',
+            to: '/@user'
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCoins} />,
+            title: 'Get coins',
+            to: '/coin'
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Setting',
+            to: '/setting'
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            title: 'Log out',
+            to: '/logout',
+            separate: true
+        }
+    ]
+
 
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <img src={images.logo} alt="Tiktok" />
                 <div>
-                    <Tippy
+                    <HeadlessTippy
                         interactive
                         visible={searchResult.length > 0}
                         placement='bottom'
@@ -105,23 +136,50 @@ const Header = () => {
                                 <FontAwesomeIcon icon={faMagnifyingGlass} />
                             </button>
                         </div>
-                    </Tippy>
+                    </HeadlessTippy>
                 </div>
-                <div className={cx('action')}>
-                    <Button text to={'/aa'}>Upload</Button>
-                    <Button primary>Log in</Button>
 
-                    <Menu
-                        items = {MENU_ITEMS}
-                        onChange ={handleMenuChange}
+                <div className={cx('action')}>
+                    {currentUser ? (
+                        <>
+                            <Tippy
+                                content='Upload video'
+                                placement='bottom'
+                                delay={[0, 200]}
+                            >
+                                <button className={cx('action-btn')}>
+                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                </button>
+                            </Tippy>
+                        </>
+                    ) : (
+                        <>
+                            <Button text to={'/'}>Upload</Button>
+                            <Button primary>Log in</Button>
+                        </>
+                    )}
+                    <Menu 
+                        items={currentUser ? userMenu : MENU_ITEMS}
+                        onChange={handleMenuChange}
                     >
-                        <button className={cx('more-btn')}>
-                            <FontAwesomeIcon icon={faEllipsisVertical} />
-                        </button>
+                        {
+                            currentUser ? (
+                                <img
+                                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ320YX0T1pvo803yJ0T1UQCMXYinp2I_9gIg&s'
+                                    className={cx('user-avatar')}
+                                    alt='avatar'
+                                />
+                            ) : (
+                                <>
+                                    <button className={cx('more-btn')}>
+                                        <FontAwesomeIcon icon={faEllipsisVertical} />
+                                    </button>
+                                </>
+                            )}
                     </Menu>
                 </div>
             </div>
-        </header>
+        </header >
     );
 }
 
