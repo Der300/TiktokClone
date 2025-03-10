@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faCloudUpload, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faMagnifyingGlass, faMessage, faQuestionCircle, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faMagnifyingGlass, faMessage, faQuestionCircle, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -13,6 +13,8 @@ import { Wrapper as PopperWrapper } from '../Popper';
 import AccountItem from '../../../AccountItem';
 import Button from '../../../Button';
 import Menu from '../Popper/Menu';
+import { SearchIcon, UploadIcon } from '../../../Icons';
+import Images from '../../../Images';
 
 const cx = classNames.bind(styles);
 
@@ -133,7 +135,7 @@ const Header = () => {
                             </button>
                             <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
                             <button type="button" className={cx('btn-search')}>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                <SearchIcon />
                             </button>
                         </div>
                     </HeadlessTippy>
@@ -147,9 +149,12 @@ const Header = () => {
                                 placement='bottom'
                                 delay={[0, 200]}
                             >
-                                <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
-                                </button>
+                                <>
+                                    <button className={cx('action-btn')}>
+                                        <UploadIcon />
+                                    </button>
+                                    
+                                </>
                             </Tippy>
                         </>
                     ) : (
@@ -158,13 +163,13 @@ const Header = () => {
                             <Button primary>Log in</Button>
                         </>
                     )}
-                    <Menu 
+                    <Menu
                         items={currentUser ? userMenu : MENU_ITEMS}
                         onChange={handleMenuChange}
                     >
                         {
                             currentUser ? (
-                                <img
+                                <Images
                                     src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ320YX0T1pvo803yJ0T1UQCMXYinp2I_9gIg&s'
                                     className={cx('user-avatar')}
                                     alt='avatar'
