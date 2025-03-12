@@ -10,6 +10,8 @@ import styles from './Search.module.scss';
 import { Wrapper as PopperWrapper } from '../Popper';
 import AccountItem from '../../../AccountItem';
 import { SearchIcon } from '../../../Icons';
+import * as searchSevices from '../../../../apiServices/searchServices';
+
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +32,7 @@ const Search = () => {
     // show loading
     const [loading, setLoading] = useState(false);
 
+    // limit call API by library debounce
     const [debounce] = useDebounce(searchValue, 500);
 
     // handle tippy search
@@ -40,16 +43,13 @@ const Search = () => {
         }
 
         setLoading(true);
-
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounce)}&type=less`)
-            .then(res => res.json())
-            .then(res => {
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            })
+        const fetchApi = async() => {
+            const result = await searchSevices.search(debounce);
+            setSearchResult(result);
+            setLoading(false);
+        }
+        fetchApi();
+        
     }, [debounce]);
 
     // handle clear input search
