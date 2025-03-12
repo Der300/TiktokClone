@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { forwardRef, useState } from "react";
 import images from "../../assets";
 
-const Images = ({ src, alt, className, ...props }, ref) => {
+const Image = ({ src, alt, className, ...props }, ref) => {
 
     const [fallback, setFallback] = useState('');
 
@@ -21,4 +21,4 @@ const Images = ({ src, alt, className, ...props }, ref) => {
     );
 }
 
-export default forwardRef(Images);
+export default forwardRef(Image);

@@ -10,7 +10,7 @@ import { HeaderOnly } from '../components/Layout'
 export const publicRoutes = [
     {path: '/', component: Home},
     {path: '/following', component: Following},
-    {path: '/profile', component: Profile},
+    {path: '/:nickname', component: Profile},
     {path: '/Upload', component: Upload, layout: HeaderOnly},
     {path: '/Search', component: Search, layout: null}
 ];

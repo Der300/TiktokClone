@@ -1,7 +1,13 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faMagnifyingGlass, faMessage, faQuestionCircle, faSignOut, faSpinner, faUser } from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
+import {  faCoins, 
+    faEarthAsia, 
+    faEllipsisVertical, 
+    faGear, 
+    faKeyboard, 
+    faQuestionCircle, 
+    faSignOut, 
+    faUser } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { useEffect, useState } from 'react';
@@ -9,12 +15,11 @@ import { useEffect, useState } from 'react';
 
 import styles from './Header.module.scss';
 import images from '../../../../assets/index';
-import { Wrapper as PopperWrapper } from '../Popper';
-import AccountItem from '../../../AccountItem';
 import Button from '../../../Button';
 import Menu from '../Popper/Menu';
-import { SearchIcon, UploadIcon } from '../../../Icons';
-import Images from '../../../Images';
+import { InboxIcon, MessageIcon, UploadIcon } from '../../../Icons';
+import Image from '../../../Image';
+import Search from '../Search';
 
 const cx = classNames.bind(styles);
 
@@ -50,18 +55,8 @@ const MENU_ITEMS = [
 ]
 
 const Header = () => {
-    // state control tippy search
-    const [searchResult, setSearchResult] = useState([]);
 
     const currentUser = true;
-
-    // handle tippy search
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 0);
-    }, []);
-
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -111,34 +106,11 @@ const Header = () => {
             <div className={cx('inner')}>
                 <img src={images.logo} alt="Tiktok" />
                 <div>
-                    <HeadlessTippy
-                        interactive
-                        visible={searchResult.length > 0}
-                        placement='bottom'
-                        render={attrs => (
-                            <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                                <PopperWrapper>
-                                    <h4 className={cx('search-title')}>
-                                        Accounts
-                                    </h4>
-                                    <AccountItem />
-                                    <AccountItem />
-                                    <AccountItem />
-                                </PopperWrapper>
-                            </div>
-                        )}
-                    >
-                        <div className={cx('search')}>
-                            <input type="text" placeholder='Search accounts and videos' spellCheck={false} />
-                            <button type="button" className={cx('clear')}>
-                                <FontAwesomeIcon icon={faCircleXmark} />
-                            </button>
-                            <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-                            <button type="button" className={cx('btn-search')}>
-                                <SearchIcon />
-                            </button>
-                        </div>
-                    </HeadlessTippy>
+
+                    {/* search section */}
+                    <Search />
+                    
+
                 </div>
 
                 <div className={cx('action')}>
@@ -153,7 +125,13 @@ const Header = () => {
                                     <button className={cx('action-btn')}>
                                         <UploadIcon />
                                     </button>
-                                    
+                                    <button className={cx('action-btn')}>
+                                        <MessageIcon />
+                                    </button>
+                                    <button className={cx('action-btn')}>
+                                        <InboxIcon />
+                                    </button>
+
                                 </>
                             </Tippy>
                         </>
@@ -169,7 +147,7 @@ const Header = () => {
                     >
                         {
                             currentUser ? (
-                                <Images
+                                <Image
                                     src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ320YX0T1pvo803yJ0T1UQCMXYinp2I_9gIg&s'
                                     className={cx('user-avatar')}
                                     alt='avatar'
