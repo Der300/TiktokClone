@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 const defaultFn = () => {}
 
-const Menu = ({ children, items, onChange = defaultFn }) => {
+const Menu = ({ children, items = [], hideOnClick = true, onChange = defaultFn }) => {
 
     const [history, setHistory] = useState([{ data: items }]);
 
@@ -40,6 +40,7 @@ const Menu = ({ children, items, onChange = defaultFn }) => {
             interactive
             // visible={true}
             offset={[12, 8]}
+            hideOnClick = {hideOnClick}
             placement='bottom-end'
             delay={[0, 800]}
             render={attrs => (

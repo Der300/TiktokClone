@@ -39,6 +39,9 @@
     --width-layout-space-horizontal: 24px;
 
     --height-layout-header: 60px;
+
+    // font
+    --font-family-main: "ProximaNova", sans-serif;
 }
 
 * {
@@ -52,7 +55,7 @@ html {
 }
 
 body {
-    font-family: "ProximaNova", sans-serif;
+    font-family: var(--font-family-main);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;

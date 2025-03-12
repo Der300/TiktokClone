@@ -43,13 +43,13 @@ const Search = () => {
         }
 
         setLoading(true);
-        const fetchApi = async() => {
+        const fetchApi = async () => {
             const result = await searchSevices.search(debounce);
             setSearchResult(result);
             setLoading(false);
         }
         fetchApi();
-        
+
     }, [debounce]);
 
     // handle clear input search
@@ -63,6 +63,19 @@ const Search = () => {
     const handleHideResult = () => {
         setShowResult(false);
     }
+
+    //don't enter space into input
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+
+        // Regular Expression - RegExp
+        const KEY_SPACE = /\s/g;
+
+        if (!KEY_SPACE.test(searchValue[0])) {
+            setSearchValue(searchValue);
+        }
+    }
+
 
     return (
         <>
@@ -94,7 +107,7 @@ const Search = () => {
                         type="text"
                         placeholder='Search accounts and videos'
                         spellCheck={false}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={handleChange}
                         onFocus={() => setShowResult(true)}
                     />
                     {
@@ -114,7 +127,7 @@ const Search = () => {
                         loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
                     }
 
-                    <button type="button" className={cx('btn-search')}>
+                    <button type="button" className={cx('btn-search')} onMouseDown={(e) => e.preventDefault()}>
                         <SearchIcon />
                     </button>
                 </div>
