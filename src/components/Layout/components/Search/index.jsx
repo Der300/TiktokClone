@@ -3,12 +3,13 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
+import { useDebounce } from 'use-debounce';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './Search.module.scss';
 import { Wrapper as PopperWrapper } from '../Popper';
 import AccountItem from '../../../AccountItem';
 import { SearchIcon } from '../../../Icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const cx = classNames.bind(styles);
 
@@ -29,16 +30,18 @@ const Search = () => {
     // show loading
     const [loading, setLoading] = useState(false);
 
+    const [debounce] = useDebounce(searchValue, 500);
+
     // handle tippy search
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debounce.trim()) {
             setSearchResult([]);
             return;
         }
 
         setLoading(true);
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounce)}&type=less`)
             .then(res => res.json())
             .then(res => {
                 setSearchResult(res.data);
@@ -47,7 +50,7 @@ const Search = () => {
             .catch(() => {
                 setLoading(false);
             })
-    }, [searchValue]);
+    }, [debounce]);
 
     // handle clear input search
     const handleClearInput = () => {
